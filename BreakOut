@@ -1,0 +1,111 @@
+import acm.graphics.*;
+import acm.program.*;
+import acm.util.*;
+
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Breakout extends GraphicsProgram {
+	
+	// variables for window
+	private static final int WINDOW_X = 450;// width of window
+	private static final int WINDOW_Y = 750; // height of window
+	
+	// variables for bricks
+	GRect brick;
+	private static final int SPACING = 2; // space between bricks
+	private static final int BRICK_WIDTH = 40; // width of bricks
+	private static final int BRICK_HEIGHT = 10; // height of bricks
+	// bricks in the base equals the window width divided by (bricks width plus brick spacing)
+	private static final int BRICKS_IN_BASE = (int)(WINDOW_X/(BRICK_WIDTH + SPACING)); 
+	// bricks in height equals 0.2 times window height divided by brick height plus brick spacing
+	private static final int BRICKS_IN_HEIGHT = (int)((0.2*WINDOW_Y)/(BRICK_HEIGHT + SPACING));
+	
+	//variables for paddle
+	GRect paddle; 	
+	private static final int PADDLE_WIDTH = 70;
+	private static final int PADDLE_HEIGHT = 10;
+	
+	//variables for ball
+	GOval ball;
+	private static final int BALL_DIAMETER = 15;
+	
+	//variables for labels
+	private GLabel livesLabel, startEnd, title;
+
+
+	String cc = "RED";
+
+
+
+	public void run() {
+
+		makeScreen();
+		makePaddle();
+		makeBall();
+
+	}
+	public void makeScreen() {
+		setSize(WINDOW_X, WINDOW_Y); // creates window and sets dimensions
+		startEnd = new GLabel("Click to start Breakout!", (WINDOW_X/2) - 100, WINDOW_Y/2); // Hi Mr. Louis! Do you know of a better way to center the 
+		// Label in the middle of the screen horizontally instead of (WINDOW_X/2 - 100)? Thanks!
+		startEnd.setFont(new Font("SanSerif Plain", Font.BOLD, 18)); //changes font of glabel
+		add(startEnd); // adds glabel
+		waitForClick(); // waits for click to begin the game
+		remove(startEnd); // removes glabel when game starts
+		title = new GLabel ("BREAKOUT", getWidth()/2 - 35, getHeight()/2);
+		
+		add(title);
+		int lives = 3; // number of lives
+		livesLabel = new GLabel ("Remaining Lives: " + lives, WINDOW_X - 100, WINDOW_Y); // label that displays lives
+		add(livesLabel); // adds label to window
+		pause(100); // stops for 100 milliseconds
+//		GRect brick; // defines brick GRECT
+		// for loop that creates the starting brick objects
+		for (int row = 1; row < BRICKS_IN_BASE + 1; row++){ // Did I do something wrong with the code? If I did not add one to "BRICKS_IN_BASE" the first row of bricks would be cyan instead of red. 
+			for (int column = 0; column < BRICKS_IN_HEIGHT ; column++) {
+				// creates bricks at the given position
+				brick = new GRect(((BRICK_WIDTH + SPACING)* column), ((BRICK_HEIGHT + SPACING) * row), BRICK_WIDTH, BRICK_HEIGHT);
+				if (row%10 == 1 || row%10 == 2 ) { // makes first two rows of bricks red
+					brick.setFilled(true); // changes color of inside of bricks
+					brick.setFillColor(Color.RED); //sets the inside of bricks to be red
+					brick.setColor(Color.RED); // changes border color from black to red
+				}
+				if (row%10 == 3 || row%10 == 4 ) { // makes third and fourth rows orange
+					brick.setFilled(true); // changes color of inside of bricks
+					brick.setFillColor(Color.ORANGE);// changes interior color to orange
+					brick.setColor(Color.ORANGE); // changes border color to orange
+				}
+				if (row%10 == 5 || row%10 == 6 ) {
+					brick.setFilled(true);// changes color of inside of bricks
+					brick.setFillColor(Color.YELLOW);// changes interior color to yellow
+					brick.setColor(Color.YELLOW);// changes border color to yellow
+				}
+				if (row%10 == 7 || row%10 == 8 ) {
+					brick.setFilled(true);// changes color of inside of bricks
+					brick.setFillColor(Color.GREEN);// changes interior color to green
+					brick.setColor(Color.GREEN);// changes border color to green
+				}
+				if (row%10 == 9 || row%10 == 0 ) {
+					brick.setFilled(true);// changes color of inside of bricks
+					brick.setFillColor(Color.CYAN);// changes interior color to cyan
+					brick.setColor(Color.CYAN);// changes border color to cyan
+				}
+				add(brick); // adds bricks to the window
+			}
+
+	public void makePaddle() {
+		paddle = new G3DRect((WINDOW_X/2) - (PADDLE_WIDTH/2), (WINDOW_Y * 0.9), PADDLE_WIDTH, PADDLE_HEIGHT); //defines position of paddle
+		paddle.setFilled(true); // changes color of paddle
+		paddle.setFillColor(Color.BLACK);
+		add(paddle); // adds paddle to window
+	}
+	public void makeBall() {
+		ball = new GOval ((WINDOW_X/2) - (BALL_DIAMETER/2), (WINDOW_Y * 0.85), BALL_DIAMETER, BALL_DIAMETER);//makes ball by setting equal dimensions for height and width
+		ball.setFilled(true); // changes color of ball to black
+		ball.setFillColor(Color.BLACK); 
+ 
+		add(ball); // adds ball to window
+	}
+}
