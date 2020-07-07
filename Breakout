@@ -1,0 +1,120 @@
+import acm.program.*;
+import acm.graphics.*;
+import java.awt.*;
+
+
+public class Pyramid_GraphicsProgram_Try2 extends GraphicsProgram{
+	private static final double BRICK_WIDTH = 30;
+	private static final double BRICK_HEIGHT = 20;
+	private static final int BRICK_ROWS = 10;
+	G3DRect brick;
+	int row = 0;
+	
+
+	public void run() {
+		
+		pyramid();
+//		colorBrick();
+		
+		
+			
+	}
+	public void pyramid() {
+		setSize(500,500);//sets dimensions for the window	
+		double windowXCenter = (getWidth()/2); // retrieves center of window horizontally                                     
+		double windowYCenter = (getHeight()/2); // retrieves center of window vertically
+		double brickXCenter = (windowXCenter) - (BRICK_WIDTH/2); // position of x coordinate of brick to be in the center
+		double brickYCenter = (windowYCenter) - (BRICK_HEIGHT/2); // position of y coordinate of brick to be in the center
+		
+		
+		int loop = 0; // increments loop so that for loop with j runs the same number of times as for loop with i
+		
+		for (int i = 0; i < BRICK_ROWS; i++) { // decrements center of the brick by half the brick width
+			loop++;//increments loop
+			row++;//increments row to help color bricks afterward
+			// finds position of center of the leftmost brick
+			brickXCenter -= (BRICK_WIDTH/2); // decrements brick center by half of brick width
+			// for loop creates bricks and sets colors
+			for (int j = 0; j < loop; j++) { // runs this loop the same number of times as the loop it is nested in
+				double brickXPositionChange = j * BRICK_WIDTH; // this double will be added to brickXCenter so that bricks will be next to each other 
+				double brickYPositionChange = i * BRICK_HEIGHT; // this double will be added to brickXCenter so that bricks will be stacked on each other
+				
+
+				brick = new G3DRect((brickXCenter + brickXPositionChange), (brickYCenter + brickYPositionChange), BRICK_WIDTH, BRICK_HEIGHT); // sets position of bricks
+//				colorBrick();
+				// depending on the row the brick is in, it will be a specific color
+				if ((row%10 == 1 || row%10 == 2) && row < 10 ) { // makes first two rows of bricks red
+					brick.setFilled(true); // changes color of inside of bricks
+					brick.setFillColor(Color.RED); //sets the inside of bricks to be red
+					brick.setColor(Color.RED); // changes border color from black to red
+				}
+				if (row%10 == 3 || row%10 == 4 ) { // makes third and fourth rows orange
+					brick.setFilled(true); // changes color of inside of bricks
+					brick.setFillColor(Color.ORANGE);// changes interior color to orange
+					brick.setColor(Color.ORANGE); // changes border color to orange
+				}
+				if (row%10 == 5 || row%10 == 6 ) {
+					brick.setFilled(true);// changes color of inside of bricks
+					brick.setFillColor(Color.YELLOW);// changes interior color to yellow
+					brick.setColor(Color.YELLOW);// changes border color to yellow
+				}
+				if (row%10 == 7 || row%10 == 8 ) {
+					brick.setFilled(true);// changes color of inside of bricks
+					brick.setFillColor(Color.GREEN);// changes interior color to green
+					brick.setColor(Color.GREEN);// changes border color to green
+				} 
+					
+				if (row%10 == 9 || row%10 == 0) { //changes color of inside of bricks
+					brick.setFilled(true);
+					brick.setFillColor(Color.CYAN);// changes interior color to cyan
+					brick.setColor(Color.CYAN);// changes border color to cyan
+				}
+				add(brick); 
+				pause(100);// code pauses for 100 milliseconds before continuing
+
+				
+
+
+				
+			}
+
+		}
+//		public void colorBrick() {
+//			if ((row%10 == 1 || row%10 == 2) && row < 10 ) { // makes first two rows of bricks red
+//				brick.setFilled(true); // changes color of inside of bricks
+//				brick.setFillColor(Color.RED); //sets the inside of bricks to be red
+//				brick.setColor(Color.RED); // changes border color from black to red
+//			}
+//			if (row%10 == 3 || row%10 == 4 ) { // makes third and fourth rows orange
+//				brick.setFilled(true); // changes color of inside of bricks
+//				brick.setFillColor(Color.ORANGE);// changes interior color to orange
+//				brick.setColor(Color.ORANGE); // changes border color to orange
+//			}
+//			if (row%10 == 5 || row%10 == 6 ) {
+//				brick.setFilled(true);// changes color of inside of bricks
+//				brick.setFillColor(Color.YELLOW);// changes interior color to yellow
+//				brick.setColor(Color.YELLOW);// changes border color to yellow
+//			}
+//			if (row%10 == 7 || row%10 == 8 ) {
+//				brick.setFilled(true);// changes color of inside of bricks
+//				brick.setFillColor(Color.GREEN);// changes interior color to green
+//				brick.setColor(Color.GREEN);// changes border color to green
+//			} 
+//				
+//			if (row%10 == 9 || row%10 == 0) { //changes color of inside of bricks
+//				brick.setFilled(true);
+//				brick.setFillColor(Color.CYAN);// changes interior color to cyan
+//				brick.setColor(Color.CYAN);// changes border color to cyan
+//			}		
+//		}
+		
+		
+		
+		
+		
+		
+	}
+}
+
+
+
