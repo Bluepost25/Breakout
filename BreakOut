@@ -32,18 +32,29 @@ public class Breakout extends GraphicsProgram {
 	private static final int BALL_DIAMETER = 15;
 	
 	//variables for labels
-	private GLabel livesLabel, startEnd, title;
+	private GLabel livesLabel, startEnd, title,fail, win, try2;
+	
+	
+	
+	
+	private int lives = 3;
 
-
-	String cc = "RED";
 
 
 
 	public void run() {
-
+		
 		makeScreen();
-		makePaddle();
-		makeBall();
+		while (lives > 0) {
+			makePaddle();
+			makeBall();
+		}
+		if (lives == -1) {
+			makeWinScreen();
+		}
+		if (lives == 0) {
+			makeLoseScreen();
+		}
 
 	}
 	public void makeScreen() {
@@ -57,8 +68,8 @@ public class Breakout extends GraphicsProgram {
 		title = new GLabel ("BREAKOUT", getWidth()/2 - 35, getHeight()/2);
 		
 		add(title);
-		int lives = 3; // number of lives
-		livesLabel = new GLabel ("Remaining Lives: " + lives, WINDOW_X - 100, WINDOW_Y); // label that displays lives
+		lives = 3; // number of lives
+		livesLabel = new GLabel ("Remaining Lives: " + lives, WINDOW_X - livesLabel.getWidth(), WINDOW_Y); // label that displays lives
 		add(livesLabel); // adds label to window
 		pause(100); // stops for 100 milliseconds
 //		GRect brick; // defines brick GRECT
@@ -94,6 +105,12 @@ public class Breakout extends GraphicsProgram {
 				}
 				add(brick); // adds bricks to the window
 			}
+		}
+
+
+		}	
+	
+
 
 	public void makePaddle() {
 		paddle = new G3DRect((WINDOW_X/2) - (PADDLE_WIDTH/2), (WINDOW_Y * 0.9), PADDLE_WIDTH, PADDLE_HEIGHT); //defines position of paddle
@@ -108,4 +125,29 @@ public class Breakout extends GraphicsProgram {
  
 		add(ball); // adds ball to window
 	}
+	public void makeLoseScreen() { // screen that is created when player loses
+		remove(title); // removes the game title
+		fail = new GLabel ("YOU LOSE!" , WINDOW_X, WINDOW_Y);
+		add(fail); // adds a new GLabel to indicate game status
+		fail.setLocation(WINDOW_X/2 - fail.getWidth()/2, WINDOW_Y - fail.getHeight()/2);
+		try2 = new GLabel ("Click to play again" , WINDOW_X, WINDOW_Y);
+		add(try2); // creates new GLabel to ask players to play again
+		try2.setLocation(WINDOW_X/2 - try2.getWidth()/2, WINDOW_Y/2 + try2.getHeight()/2);
+		waitForClick();
+		removeAll(); // screen waits for player to click before removing everything from the screen
+	}
+	public void makeWinScreen() { // screen that is created when player wins
+		remove(title); // removes game title
+		win = new GLabel ("YOU WIN!" , WINDOW_X, WINDOW_Y);
+		add(win);// adds new GLabel to indicate game status
+		win.setLocation(WINDOW_X/2 - win.getWidth()/2, WINDOW_Y - win.getHeight()/2);
+		try2 = new GLabel ("Click to play again" , WINDOW_X, WINDOW_Y);
+		add(try2); // creates new GLabel to ask players to play again
+		try2.setLocation(WINDOW_X/2 - try2.getWidth()/2, WINDOW_Y/2 + try2.getHeight()/2);
+		waitForClick();
+		removeAll(); // screen waits for player to click before removing everything from the screen
+	}
+
 }
+
+
